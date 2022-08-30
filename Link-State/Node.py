@@ -1,3 +1,5 @@
+#Class to initialze nodes
+
 import asyncio
 import logging
 import slixmpp
