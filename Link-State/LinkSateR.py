@@ -1,0 +1,6 @@
+
+
+
+
+class LinkSate(Node):
+    pass
