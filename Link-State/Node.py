@@ -75,10 +75,10 @@ class Node(slixmpp.ClientXMPP):
         except IqTimeout:
             print('Error: Request timed out')
             
-    async def message(self, message):
+    async def Message(self, message):
         if message['type'] in ('normal', 'chat'):
             await aprint("\n{}".format(message['body']))
 
-    def node_disconnected(self, e):
+    def disconnect(self, e):
         print('Node {} is offline'.format(e['from'].bare))
       
