@@ -1,4 +1,4 @@
-from node import Node
+from Node import Node
 from slixmpp.basexmpp import BaseXMPP
 import json
 import asyncio
@@ -6,6 +6,12 @@ from scipy.sparse.csgraph import shortest_path
 import numpy as np
 from xml.etree import ElementTree as ET
 from time import time
+from aioconsole import ainput
+from optparse import OptionParser
+import logging
+import getpass
+
+
 
 De = 20  
 class LinkSate(Node):
@@ -184,6 +190,118 @@ class LinkSate(Node):
                     print("Receive messages: %s" % bare_msg)
             else:
                 pass
+            
+    
+def jsonFile(file):
+	with open(file) as jsonFile:
+		return json.load(jsonFile)
+
+def getData(node, file):
+	info = jsonFile(file)
+	if info['type'] == 'topology':
+		return info['config'][node]
+	elif info['type'] == 'users':
+		return info['config']
+	else:
+		return -1
+
+def keys(file):
+	info = jsonFile(file)
+	return list(info['config'].keys())
+
+async def main(nodo : LinkSate):
+  for router in nodo.nick:
+    nodo.send_presence_subscription(nodo.neighbors[router], nodo.boundjid)
+
+  nodo.init_listener()
+  
+  is_connected = True
+  while is_connected:
+    print("-"*40) 
+    print(
+    """
+    Options:
+    1.  Send message
+    2.  Log out
+    """
+    )
+    option = int( await ainput("Choose an option: \n"))
+    if option == 1:
+      dest = await ainput("Write the recipient userId : ")
+      msg = await ainput("Write message: ")
+      nodo.sendMessage(dest,msg)
+    elif option == 2:
+      nodo.is_offline = True
+      print("Disconnecting ...")
+      await asyncio.sleep(10)
+      is_connected = False
+      nodo.disconnect()
+    else:
+      pass
+
+if __name__ == "__main__":
+
+  optp = OptionParser()
+
+  t_k = keys("topology.txt")
+
+  # para debbuging
+  optp.add_option('-d', '--debug', help='set loggin to DEBUG', action='store_const', dest='loglevel', const=logging.DEBUG, default=logging.INFO)
+  # para debbuging
+  optp.add_option("-u", "--userid", dest="userid", help="userid to use")
+  # para debbuging
+  optp.add_option("-p", "--password", dest="password", help="password to use")
+  # para debbuging
+  optp.add_option("-n", "--new", dest="newUserid", help="is registering a new user", action='store_const', const=True, default=False)
+  # para debbuging
+  optp.add_option("-r", "--router", dest="router", help="router nickname")
+  # para debbuging
+  optp.add_option("-a", "--algorithm", dest="algorithm", help="algorithm to use")
+
+  opts, args = optp.parse_args()
+
+  if opts.userid is None:
+    opts.userid = input("Type userid @alumchat.fun: ")
+  if opts.password is None:
+    opts.password = getpass.getpass("Type password: ")
+  if opts.router is None:
+    opts.router = input("Router to choose: ")
+  if opts.algorithm is None:
+    opts.algorithm = input("LSR Algorithm: ")
+
+  logging.basicConfig(level=opts.loglevel, format='%(levelname)-8s %(message)s')
+
+
+  assignedNode = opts.router
+  topo = getData(assignedNode,'topology.txt')
+  users = getData(assignedNode,'users.txt')
+  print(topo)
+  print(users)
+  assignedNodes = {}
+  for i in topo:
+    assignedNodes[i] = users[i] 
+
+  if opts.algorithm == 'lsr':
+    nodo = LinkSate(opts.userid, opts.password, assignedNode, assignedNodes)
+  else:
+    nodo = None
+
+  if nodo != None:
+    try:
+      if opts.newUserid:
+        print("Proceso de registro de usuario")
+      print("Proceso de conexion a la alumchat.fun")
+      nodo.connect() 
+      nodo.loop.run_until_complete(nodo.connected_event.wait())
+      nodo.loop.create_task(main(nodo))
+      nodo.process(forever=False)
+    except Exception as e:
+      print("Error:", e)
+    finally:
+      nodo.disconnect()
+  else:
+    print("Algoritmo no es correcto")
+
                     
 
             
