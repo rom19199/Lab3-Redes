@@ -1,4 +1,4 @@
-from Node import Node
+from node import Node
 from slixmpp.basexmpp import BaseXMPP
 import json
 import asyncio
