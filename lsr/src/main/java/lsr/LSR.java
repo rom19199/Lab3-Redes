@@ -411,7 +411,7 @@ public class LSR {
         } else {
             System.out.println("Found path: " + Arrays.toString(path));
             JSONObject json = new JSONObject();
-            /*json.put("type", "MESSAGE");*/
+            json.put("type", "MESSAGE");
             json.put("message", message);
             json.put("from", username);
             json.put("nodes", path.length - 1);
