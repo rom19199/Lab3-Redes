@@ -19,4 +19,10 @@ Luego, se debe ingresar con la cuenta carnet@alumchat.fun junto con la contrase√
 
 ### Flooding
 
+Para ejecutar el algoritmo lsr se debe ejecutar el archivo .jar yendo a la carpeta cd lsr y luego ejecutar el siguiente comando.
 
+```
+java -jar ./Flooding.jar 
+```
+Luego iniciar sesion y despues ingresar a la opcion 7 que es para el algoritmo de flooding. Hay que poner el nodo fuente, el nodo 
+destino y despues el mensaje a enviar. 
