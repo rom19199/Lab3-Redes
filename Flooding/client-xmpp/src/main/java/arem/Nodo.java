@@ -27,7 +27,7 @@ public class Nodo {
         return this.message = "----------------------Mensaje----------------------" + "\n" +
                               "Nodo fuente: " + s + "\n" +
                               "Nodo destino: " + d + "\n" +
-                              "Saltos dados desde nodo fuente: " + saltos + "\n";
+                              "Saltos dados desde nodo inicial: " + saltos + "\n";
     }
 
     //Setter
