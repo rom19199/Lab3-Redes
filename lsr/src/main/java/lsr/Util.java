@@ -10,7 +10,7 @@ public class Util {
 
     public static HashMap<String, String[]> readTopoConfig() {
         try {
-            JSONObject jsonObject = readFile("lsr/src/main/resources/topo.json");
+            JSONObject jsonObject = readFile("src/main/resources/topo.json");
 
             if (jsonObject == null) {
                 System.out.println("File not found");
@@ -32,7 +32,7 @@ public class Util {
 
     public static HashMap<String, String> readnamesConfig() {
         try {
-            JSONObject jsonObject = readFile("lsr/src/main/resources/names.json");
+            JSONObject jsonObject = readFile("src/main/resources/names.json");
 
             if (jsonObject == null) {
                 System.out.println("File not found");

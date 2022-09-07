@@ -217,14 +217,14 @@ public final class App {
         JSONParser parser = new JSONParser();
 
         //Se inicializa el json que contiene la topologia del grafo
-        Object obj = parser.parse(new FileReader("Flooding/client-xmpp/src/main/java/arem/assets/topologia.json"));
+        Object obj = parser.parse(new FileReader("client-xmpp/src/main/java/arem/assets/topologia.json"));
         JSONObject jsonObject = (JSONObject)obj;
         String type = (String)jsonObject.get("type");
         System.out.println("Se ha cargado el archivo tipo: " + type + "\n"); 
         JSONObject config = (JSONObject)jsonObject.get("config");
         
         //Se inicizliza el json que contiene los nombres de los grafos
-        Object names = parser.parse(new FileReader("Flooding/client-xmpp/src/main/java/arem/assets/names.json"));
+        Object names = parser.parse(new FileReader("client-xmpp/src/main/java/arem/assets/names.json"));
         JSONObject namesObject = (JSONObject)names;
         String typeName = (String)namesObject.get("type");
         System.out.println("Se ha cargado el archivo tipo: " + typeName); 
