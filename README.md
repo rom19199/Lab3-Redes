@@ -10,3 +10,11 @@ Internet y comprender cómo funcionan las tablas de enrutamiento.
 
 ### LSR 
 
+Para ejecutar el algoritmo lsr se debe ejecutar el archivo .jar yendo a la carpeta cd lsr y luego ejecutar el siguiente comando.
+
+```
+java -jar ./lsr.jar
+
+```
+
+
