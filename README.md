@@ -14,7 +14,9 @@ Para ejecutar el algoritmo lsr se debe ejecutar el archivo .jar yendo a la carpe
 
 ```
 java -jar ./lsr.jar
-
 ```
+Luego, se debe ingresar con la cuenta carnet@alumchat.fun junto con la contraseña, estas ya deben estar registradas.
+
+### Flooding
 
 
