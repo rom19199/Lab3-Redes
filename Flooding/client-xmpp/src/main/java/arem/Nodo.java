@@ -24,7 +24,7 @@ public class Nodo {
     }
 
     public String Message(String s, String d){
-        return this.message = "----------------------Mensaje----------------------" + "\n" +
+        return this.message = "\n\n" + "----------------------Mensaje----------------------" + "\n" +
                               "Nodo fuente: " + s + "\n" +
                               "Nodo destino: " + d + "\n" +
                               "Saltos dados desde nodo inicial: " + saltos + "\n";
