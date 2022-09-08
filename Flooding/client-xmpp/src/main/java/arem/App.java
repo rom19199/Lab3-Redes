@@ -142,7 +142,6 @@ public final class App {
 
                     //Variable que reune toda la info para enviar a los nodos
                     newMessage = nodos[Buffer[j] - 1].Message(nodos[i].getNodo(), nodos[d - 1].getNodo()) + listNd + message;
-                    System.out.print("aaaa");
                     chat.send(newMessage);
 
                     if (nodos[Buffer[j] - 1].getIdNodo() == d){
@@ -179,7 +178,7 @@ public final class App {
                             Chat chat = chatManager.chatWith(jid);
 
                             //Variable que reune toda la info para enviar a los nodos
-                            newMessage = nodos[indice-1].Message(nodos[i].getNodo(), nodos[d - 1].getNodo()) + listNd + message;
+                            newMessage = nodos[indice-1].Message(nodos[k-1].getNodo(), nodos[d - 1].getNodo()) + listNd + message;
 
                             chat.send(newMessage);
                         }
@@ -197,7 +196,7 @@ public final class App {
                         Chat chat = chatManager.chatWith(jid);
 
                         //Variable que reune toda la info para enviar a los nodos
-                        newMessage = nodos[indice-1].Message(nodos[i].getNodo(), nodos[d - 1].getNodo()) + listNd + message;
+                        newMessage = nodos[indice-1].Message(nodos[k-1].getNodo(), nodos[d - 1].getNodo()) + listNd + message;
 
                         chat.send(newMessage);
 
