@@ -287,10 +287,8 @@ public final class App {
             innerK[0] = innerK[0] + 1;
         });
 
-        if (NodeUser[0] != 0){
-            showNetworkMatrix(network,n);
-            System.out.println("\n" + "------Todos los preparativos estan listos para Flooding------" + "\n");  
-        }
+        showNetworkMatrix(network,n);
+        System.out.println("\n" + "------Todos los preparativos estan listos para Flooding------" + "\n");  
         return Arrays.asList(nodos, n, NodeUser[0]); 
     }
 
@@ -632,10 +630,10 @@ public final class App {
                                         s = (int)grafo[2];
                                     }
 
-                                    if (s == 0) {
-                                        System.out.println("\n" + "!!!!Este usuario no es parte de la topologia!!!!" + "\n");
-                                        break;   
-                                    }
+                                    // if (s == 0) {
+                                    //     System.out.println("\n" + "!!!!Este usuario no es parte de la topologia!!!!" + "\n");
+                                    //     break;   
+                                    // }
 
                                     BufferedReader br = new BufferedReader(new InputStreamReader(System.in));   
                                     int c; //Una variable solo para obtener los inputs  
