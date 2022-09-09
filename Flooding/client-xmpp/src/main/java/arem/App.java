@@ -142,7 +142,6 @@ public final class App {
 
                     //Variable que reune toda la info para enviar a los nodos
                     newMessage = nodos[Buffer[j] - 1].Message(nodos[i].getNodo(), nodos[d - 1].getNodo()) + listNd + message;
-
                     chat.send(newMessage);
 
                     if (nodos[Buffer[j] - 1].getIdNodo() == d){
@@ -179,7 +178,7 @@ public final class App {
                             Chat chat = chatManager.chatWith(jid);
 
                             //Variable que reune toda la info para enviar a los nodos
-                            newMessage = nodos[indice-1].Message(nodos[i].getNodo(), nodos[d - 1].getNodo()) + listNd + message;
+                            newMessage = nodos[indice-1].Message(nodos[k-1].getNodo(), nodos[d - 1].getNodo()) + listNd + message;
 
                             chat.send(newMessage);
                         }
@@ -197,7 +196,7 @@ public final class App {
                         Chat chat = chatManager.chatWith(jid);
 
                         //Variable que reune toda la info para enviar a los nodos
-                        newMessage = nodos[indice-1].Message(nodos[i].getNodo(), nodos[d - 1].getNodo()) + listNd + message;
+                        newMessage = nodos[indice-1].Message(nodos[k-1].getNodo(), nodos[d - 1].getNodo()) + listNd + message;
 
                         chat.send(newMessage);
 
@@ -213,7 +212,7 @@ public final class App {
     }
     //#endregion
 
-    public static List<Object> getGrafo() throws FileNotFoundException, IOException, ParseException{
+    public static List<Object> getGrafo(String user) throws FileNotFoundException, IOException, ParseException{
         JSONParser parser = new JSONParser();
 
         //Se inicializa el json que contiene la topologia del grafo
@@ -245,6 +244,8 @@ public final class App {
 
         final Integer[] innerK = new Integer[1];
         innerK[0] = 1;
+        final Integer[] NodeUser = new Integer[1];
+        NodeUser[0] = 0;
         config.keySet().forEach(keyStr ->{
             // Object keyvalue = config.get(keyStr);
             // System.out.println("key: " + keyStr);
@@ -253,6 +254,7 @@ public final class App {
             JSONArray subjects = (JSONArray)config.get(keyStr);
             // VAriable que tiene los nombres de todos los nodos por key
             String name = (String)nameConfig.get(keyStr);
+            
             
             Iterator iterator = subjects.iterator();
             int [] id = new int [subjects.size()];
@@ -263,6 +265,8 @@ public final class App {
                 
                 id [k] = (int)str.charAt(0) - 64;
                 idName [k] = str;
+
+                
                 //Se rellena la matrix netword con los datos del json
                 network[innerK[0]][(int)str.charAt(0) - 64] = 1;
                 k += 1;
@@ -272,16 +276,22 @@ public final class App {
                 if (network[innerK[0]][i] != 1) network[innerK[0]][i] = 0;     
             }
             
-
             String idNodo = (String)keyStr;
+            //Obtiene el usuario del grafo con el que se hizo login
+            if (user.equals(name))   NodeUser[0] = (int)idNodo.charAt(0) - 64;   
+            
+
             //Iniciacion de nodo
             nodos[innerK[0] - 1] = new Nodo();
             nodos[innerK[0] - 1].setData(id, idName, (String)keyStr, (int)idNodo.charAt(0) - 64,false, name);
             innerK[0] = innerK[0] + 1;
         });
-        showNetworkMatrix(network,n);
-        System.out.println("\n" + "------Todos los preparativos estan listos para Flooding------" + "\n");  
-        return Arrays.asList(nodos, n); 
+
+        if (NodeUser[0] != 0){
+            showNetworkMatrix(network,n);
+            System.out.println("\n" + "------Todos los preparativos estan listos para Flooding------" + "\n");  
+        }
+        return Arrays.asList(nodos, n, NodeUser[0]); 
     }
 
     public static void menuInicio(){
@@ -431,6 +441,8 @@ public final class App {
                         String messege = "";
                         Nodo[] nodos = null;
                         int countNodos = 0;
+                        //La variable que guarda el nodo inicial de donde se enviaran los mensajes
+                        int s = 0;
                         while(connection.isConnected()){
                             System.out.print("> ");
                             op = Integer.parseInt(conteiner.nextLine());
@@ -609,19 +621,26 @@ public final class App {
                                     break;
 
                                 case 7:
-                                    if (nodos == null && countNodos == 0){
-                                        List<Object> objects = getGrafo();
+                                
+                                if (nodos == null && countNodos == 0){
+                                        String getUser = connection.getUser().toString();
+                                        String[] arroUser = getUser.split("/");
+                                        List<Object> objects = getGrafo(arroUser[0]);
                                         Object[] grafo = objects.toArray();
                                         nodos = (Nodo[])grafo[0];
                                         countNodos = (int)grafo[1];
+                                        s = (int)grafo[2];
+                                    }
+
+                                    if (s == 0) {
+                                        System.out.println("\n" + "!!!!Este usuario no es parte de la topologia!!!!" + "\n");
+                                        break;   
                                     }
 
                                     BufferedReader br = new BufferedReader(new InputStreamReader(System.in));   
                                     int c; //Una variable solo para obtener los inputs  
                                     String msg; // Una variable para obtner el input del mensaje a enviar a los nodos
-                                    System.out.print(" Enter the source node  id  :  ");
-                                    c = Integer.valueOf(br.readLine());  
-                                    int s=c;//source node id variable
+                                    System.out.println(" The source node  id  :  " + s + "\n");
                                     System.out.print(" Enter the  destination node id  :  ");
                                     c=Integer.valueOf(br.readLine());
                                     int d=c;//destination node id variable
