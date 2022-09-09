@@ -406,7 +406,7 @@ public class LSR {
         String[] path = this.getShortestPath(to);
 
         if (path == null) {
-            System.out.println("Could not find a way to deliver the message");
+            System.out.println("");
             return;
         } else {
             System.out.println("Found path: " + Arrays.toString(path));
