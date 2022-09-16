@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<checkstyle version="8.39">
+<file name="/home/arem/Documents/Universidad/Decimo semestre/Redes/Proyecto 1/Chat_XMPP/client-xmpp/src/main/java/arem/App.java">
+<error line="2" column="1" severity="error" message="&apos;/*&apos; should be separated from previous statement." source="com.puppycrawl.tools.checkstyle.checks.whitespace.EmptyLineSeparatorCheck"/>
+<error line="5" column="1" severity="error" message="&apos;CLASS_DEF&apos; should be separated from previous statement." source="com.puppycrawl.tools.checkstyle.checks.whitespace.EmptyLineSeparatorCheck"/>
+</file>
+<file name="/home/arem/Documents/Universidad/Decimo semestre/Redes/Proyecto 1/Chat_XMPP/client-xmpp/src/test/java/arem/AppTest.java">
+</file>
+</checkstyle>

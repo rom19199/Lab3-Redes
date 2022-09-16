@@ -1,0 +1,8 @@
+{
+    "java.project.sourcePaths": [
+        "client-xmpp/src/main/java/arem",
+        "Java Client Xmpp/src",
+        "example/src/main/java/bmp"
+    ],
+    "java.configuration.updateBuildConfiguration": "interactive"
+}
